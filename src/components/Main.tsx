@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function Main() {
   return (
     <Wrapper>
-      <MainContainer></MainContainer>
+      <MainContainer>dashboard</MainContainer>
     </Wrapper>
   );
 }

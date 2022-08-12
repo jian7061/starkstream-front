@@ -1,7 +1,7 @@
 import { useStarknet } from "@starknet-react/core";
 import styled from "styled-components";
 import React from "react";
-import SideBar from "./Sidebar";
+import Header from "./Header";
 
 interface IProps {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ export default function Layout({ children }: IProps) {
 
   return (
     <Wrapper>
-      <SideBar account={account} />
+      <Header account={account} />
       <main>{children}</main>
     </Wrapper>
   );

@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 
 const Send: NextPage = () => {
-  return <div>Send</div>;
+  return <div>stream</div>;
 };
 
 export default Send;
