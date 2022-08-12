@@ -41,14 +41,6 @@ const tableCols = [
     header: "NET FLOW",
     cell: (info) => <Link href={"/"}>Inflow / Outflow</Link>,
   }),
-  columnHelper.accessor("inflow", {
-    header: "INFLOW / OUTFLOW",
-    cell: (info) => (
-      <ChallengeStatusPill status={info.getValue()}>
-        {capitalize(info.getValue())}
-      </ChallengeStatusPill>
-    ),
-  }),
 ];
 
 export default function TokenTable({ data }: { data: TokenData[] }) {
@@ -95,18 +87,21 @@ export default function TokenTable({ data }: { data: TokenData[] }) {
   );
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: calc(70vw);
+`;
 
-const Title = styled.h2`
+const Title = styled.p`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.5rem;
-  margin: 0;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #fff;
 `;
 
 const MainContainer = styled.div`
-  border: 2px solid #fff;
+  border: 1px solid #aeaeaf;
   border-radius: 10px;
   padding: 2rem;
 `;
@@ -123,7 +118,7 @@ const Row = styled.tr`
     padding-bottom: 1.5rem;
   }
   th {
-    color: #cacbcb;
+    color: #fff;
     font-size: 0.75rem;
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
@@ -140,7 +135,7 @@ const TableContainer = styled.table`
   padding-bottom: 1rem;
   a {
     text-decoration: none;
-    color: #7753f6;
+    color: #fff;
   }
   a:hover {
     text-decoration: underline;

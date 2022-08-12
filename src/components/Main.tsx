@@ -49,21 +49,21 @@ export default function Main() {
   };
   return (
     <Wrapper>
+      <Button
+        onClick={() => {
+          setIsOpen(true);
+        }}
+      >
+        Click to show modal
+      </Button>
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+        style={customStyles}
+      >
+        <NewBuildModal setIsOpen={setIsOpen} />
+      </Modal>
       <MainContainer>
-        <Button
-          onClick={() => {
-            setIsOpen(true);
-          }}
-        >
-          Click to show modal
-        </Button>
-        <Modal
-          isOpen={isOpen}
-          onRequestClose={() => setIsOpen(false)}
-          style={customStyles}
-        >
-          <NewBuildModal setIsOpen={setIsOpen} />
-        </Modal>
         <TableContainer>
           <TokenTable data={data} />
         </TableContainer>
@@ -72,9 +72,14 @@ export default function Main() {
   );
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+`;
 
-const MainContainer = styled.div``;
+const MainContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+`;
 
 const Button = styled.button`
   &:hover {
