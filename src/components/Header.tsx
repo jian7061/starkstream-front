@@ -34,7 +34,7 @@ export default function Header({ account }: any) {
               href={item.href}
               onClick={makeHandleClick(item.href)}
             >
-              {item.title}
+              {item.title.toUpperCase()}
             </NavItem>
           ))}
         </NavItemsContainer>
@@ -50,6 +50,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #676666;
   color: #fff;
 `;
 
@@ -79,6 +80,8 @@ const NavItemsContainer = styled.div`
 const NavItem = styled.a`
   text-decoration: none;
   color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
   margin-left: 1.3rem;
   &:hover {
     cursor: pointer;
