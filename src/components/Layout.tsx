@@ -19,13 +19,16 @@ export default function Layout({ children }: IProps) {
 }
 
 const Wrapper = styled.div`
+  min-height: 100vh;
   font-family: "Poppins", sans-serif;
   color: #979595;
   background: linear-gradient(
     66.46deg,
-    #03001e 24.27%,
-    rgba(16, 0, 156, 0.758) 80.29%
-  ); ;
+    #03001D 24.27%,
+    rgba(94, 12, 126, 0.612) 62.29%,
+    #270aa9 100%
+  );
+  backdrop-filter: blur(400px);
 `;
 
 const Main = styled.div`
