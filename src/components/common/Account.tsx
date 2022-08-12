@@ -43,9 +43,9 @@ const sizeStyles = css<{ size: string }>`
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  border: 1px solid #fff;
   border-radius: 10px;
-  padding: 0 0.7rem;
+  padding: 0 2rem;
+  background-color: rgba(211, 210, 210, 0.2);
   margin-top: 0.7rem;
 `;
 

@@ -1,6 +1,7 @@
 import { useConnectors } from "@starknet-react/core";
 import styled from "styled-components";
 import Account from "../components/common/Account";
+
 type ConnectProps = { account: string | undefined };
 
 export default function Connect({ account }: ConnectProps) {
@@ -26,6 +27,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 0.7rem;
+  line-height: 0.7rem;
 `;
 
 const AccountContainer = styled.div`
@@ -35,5 +37,3 @@ const AccountContainer = styled.div`
     cursor: pointer;
   }
 `;
-
-const ConnectButton = styled.button``;
