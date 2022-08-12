@@ -4,6 +4,31 @@ import { useRouter } from "next/router";
 Modal.setAppElement("#__next");
 import { useState } from "react";
 import NewBuildModal from "../components/modal/NewBuildModal";
+import TokenTable, { TokenData } from "./TokenTable";
+
+const data: TokenData[] = [
+  {
+    asset: "A",
+    balance: "someDemo",
+    netFlow: "ERC721",
+    inflow: "done",
+    image: "",
+  },
+  {
+    asset: "B",
+    balance: "someDemo",
+    netFlow: "ERC721",
+    inflow: "done",
+    image: "",
+  },
+  {
+    asset: "C",
+    balance: "someDemo",
+    netFlow: "ERC721",
+    inflow: "done",
+    image: "",
+  },
+];
 
 export default function Main() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,6 +64,9 @@ export default function Main() {
         >
           <NewBuildModal setIsOpen={setIsOpen} />
         </Modal>
+        <TableContainer>
+          <TokenTable data={data} />
+        </TableContainer>
       </MainContainer>
     </Wrapper>
   );
@@ -53,3 +81,5 @@ const Button = styled.button`
     cursor: pointer;
   }
 `;
+
+const TableContainer = styled.div``;
