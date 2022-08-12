@@ -48,12 +48,10 @@ const Wrapper = styled.div`
   width: calc(100%);
   margin-top: 0.5rem;
   padding: 1rem 2rem;
-  border-bottom: 1px solid #0d122b;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: #fff;
-  background-color: #0d122b;
 `;
 
 const NavContainer = styled.div`
