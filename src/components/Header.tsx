@@ -46,7 +46,6 @@ export default function Header({ account }: any) {
 
 const Wrapper = styled.div`
   width: calc(100%);
-  margin-top: 0.5rem;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
