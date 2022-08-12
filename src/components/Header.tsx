@@ -1,7 +1,8 @@
 import Connect from "./Connect";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const NavItems = [
   { title: "Dashboard", href: "/" },
@@ -12,9 +13,9 @@ const NavItems = [
 export default function Header({ account }: any) {
   const router = useRouter();
 
-  const makeHandleClick = (href: string) => (e: any) => {
+  const makeHandleClick = (item: any) => (e: any) => {
     e.preventDefault();
-    router.push(href);
+    router.push(item.href);
   };
 
   return (
@@ -32,7 +33,7 @@ export default function Header({ account }: any) {
             <NavItem
               key={item.href}
               href={item.href}
-              onClick={makeHandleClick(item.href)}
+              onClick={makeHandleClick(item)}
             >
               {item.title.toUpperCase()}
             </NavItem>
@@ -45,6 +46,7 @@ export default function Header({ account }: any) {
 }
 
 const Wrapper = styled.div`
+  font-family: "Noto Sans";
   width: calc(100%);
   padding: 1rem 2rem;
   display: flex;
@@ -80,10 +82,11 @@ const NavItemsContainer = styled.div`
 const NavItem = styled.a`
   text-decoration: none;
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
   margin-left: 1.3rem;
   &:hover {
     cursor: pointer;
+    opacity: 0.7;
   }
 `;
