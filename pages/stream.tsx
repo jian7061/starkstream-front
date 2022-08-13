@@ -1,10 +1,13 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
+import GlowingContainer from "../src/Stream/GlowingContainer";
 
 const Send: NextPage = () => {
   return (
     <Wrapper>
-      <MainContainer>Stream</MainContainer>
+      <MainContainer>
+        <GlowingContainer />
+      </MainContainer>
     </Wrapper>
   );
 };
