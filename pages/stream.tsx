@@ -1,18 +1,15 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
-import WrapContainer from "../src/Wrap/WrapContainer";
 
-const Wrap: NextPage = () => {
+const Send: NextPage = () => {
   return (
     <Wrapper>
-      <MainContainer>
-        <WrapContainer />
-      </MainContainer>
+      <MainContainer>Stream</MainContainer>
     </Wrapper>
   );
 };
 
-export default Wrap;
+export default Send;
 
 const Wrapper = styled.div`
   display: flex;

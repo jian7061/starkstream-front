@@ -1,7 +1,7 @@
 import { useConnectors } from "@starknet-react/core";
 import styled from "styled-components";
 import Account from "../components/common/Account";
-import { Button } from "../components/common/Button";
+
 type ConnectProps = { account: string | undefined };
 
 export default function Connect({ account }: ConnectProps) {
@@ -10,14 +10,13 @@ export default function Connect({ account }: ConnectProps) {
   return (
     <Wrapper>
       {account ? (
-        <AccountContainer>
+        <AccountContainer onClick={() => disconnect()}>
           <Account />
-          <Disconnect>
-            <Button onClick={() => disconnect()}>Disconnect</Button>
-          </Disconnect>
         </AccountContainer>
       ) : (
-        <Button onClick={() => connect(available[0])}>Connect Wallet</Button>
+        <AccountContainer onClick={() => connect(available[0])}>
+          <Account />
+        </AccountContainer>
       )}
     </Wrapper>
   );
@@ -28,15 +27,12 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 0.7rem;
+  line-height: 0.7rem;
 `;
 
 const AccountContainer = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const Disconnect = styled.div`
-  margin-left: 0.8rem;
   &:hover {
     cursor: pointer;
   }

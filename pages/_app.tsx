@@ -9,9 +9,6 @@ import Layout from "../src/components/Layout";
 import "../styles/reset.css";
 import { ThemeProvider } from "styled-components";
 import { theme } from "../styles/theme";
-import ReactModal from "react-modal";
-
-ReactModal.setAppElement("#__next");
 
 function MyApp({ Component, pageProps }: AppProps) {
   const connectors = getInstalledInjectedConnectors();
