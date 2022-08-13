@@ -8,8 +8,8 @@ export default function WrapContainer() {
   const [action, setAction] = useState("wrap");
 
   const selectedStyle = {
-    color: "red",
-    border: "1px solid blue",
+    border: "none",
+    background: "#5951c3",
   };
 
   const unselectedStyle = {};
@@ -19,18 +19,6 @@ export default function WrapContainer() {
       return <Wrap />;
     } else if (action === "unwrap") {
       return <Unwrap />;
-    } else if (action === "select") {
-      return (
-        // <CoinSelector
-        //   setAction={setAction}
-        //   selectedToken={selectedToken}
-        //   setSelectedToken={setSelectedToken}
-        //   sanityTokens={sanityTokens}
-        //   twTokens={twTokens}
-        //   walletAddress={walletAddress}
-        // />
-        <div>select</div>
-      );
     }
   };
   return (
@@ -70,9 +58,9 @@ export default function WrapContainer() {
 
 const Wrapper = styled.div`
   width: 500px;
-  height: 450px;
-  background-color: #391e5a;
+  height: 500px;
   border-radius: 20px;
+  background-color: #391e5a;
   box-shadow: rgb(204 204 204 / 55%) 0px 0px 6px 3px;
   border: 2px solid #80b8c2;
   padding: 28px;
@@ -84,9 +72,15 @@ const Selector = styled.div`
 `;
 
 const Option = styled.div`
+  padding: 0 1rem;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 0;
+  border-radius: 5px;
   &:hover {
     cursor: pointer;
-    background-color: #604876;
+    box-shadow: rgb(204 204 204 / 25%) 0px 0px 6px 3px;
   }
 `;
 
