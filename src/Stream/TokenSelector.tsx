@@ -1,26 +1,33 @@
 import { Select } from 'antd';
-import React from 'react';
+import React, { FC, useContext } from 'react';
 const { Option } = Select;
 
 const tokenList: String[] = ["WETH", "BTC", "USDC"]
 
-const TokenSelector = () => (
-  <Select
-    showSearch
-    style={{
-      width: 200,
-    }}
-    placeholder="Search Token"
-    optionFilterProp="children"
-    // filterOption={(input, option) => option.children.includes(input)}
-    // filterSort={(optionA, optionB) =>
-    //   optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-    // }
-  >
-    {tokenList.map((token, idx) => 
-        <Option key={idx} value={idx}>{token}</Option>
-    )}
-  </Select>
-);
+interface ITokenSelector {
+  token: string,
+  setToken: (arg0: string) => void,
+  [x: string]: any
+}
+
+const TokenSelector: FC<ITokenSelector> = ({ token, setToken, ...rest }) => {
+  return (
+    <Select
+      {...rest}
+      value={token}
+      showSearch
+      style={{
+        width: 200,
+      }}
+      placeholder="Search Token"
+      optionFilterProp="children"
+      onChange={setToken}
+    >
+      {tokenList.map((token, idx) =>
+        <Option key={idx} value={token}>{token}</Option>
+      )}
+    </Select>
+  )
+};
 
 export default TokenSelector;

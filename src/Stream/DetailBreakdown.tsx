@@ -6,33 +6,33 @@ export interface IDetails {
     receiver: string,
     token: string,
     flowrate: number,
-    endsOn: number
-  };
+    // endsOn: number
+};
 
-const DetailBreakdown: FC<{details: IDetails}> = ({details}) => {
+const DetailBreakdown: FC<{ detail: IDetails }> = ({ detail }) => {
     return (
-    <>
-        <Divider />
+        <>
+            <Divider />
 
-        <GreenLineContainer>
-            <table>
-                <tbody>
-                    <tr>
-                        <Td>Receiver</Td>
-                        <Td>{details.receiver}</Td>
-                    </tr>
-                    <tr>
-                        <Td>Flow Rate</Td>
-                        <Td>{details.flowrate}</Td>
-                    </tr>
-                    <tr>
+            <GreenLineContainer>
+                <table>
+                    <tbody>
+                        <tr>
+                            <Td>Receiver</Td>
+                            <Td>{detail.receiver}</Td>
+                        </tr>
+                        <tr>
+                            <Td>Flow Rate</Td>
+                            <Td>{detail.flowrate} {detail.token} / second</Td>
+                        </tr>
+                        {/* <tr>
                         <Td>Ends on</Td>
                         <Td>{details.endsOn}</Td>
-                    </tr>
-                </tbody>
-            </table>
-        </GreenLineContainer>
-    </>
+                    </tr> */}
+                    </tbody>
+                </table>
+            </GreenLineContainer>
+        </>
     )
 }
 
