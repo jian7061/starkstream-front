@@ -30,6 +30,22 @@ const data: TokenData[] = [
 ];
 
 export default function Main() {
+  const [isOpen, setIsOpen] = useState(false);
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      backgroundColor: "white",
+      padding: "1rem",
+      border: "none",
+    },
+    overlay: {
+      backgroundColor: "rgba(168, 180, 202, 0.75)",
+    },
+  };
   return (
     <Wrapper>
       <MainContainer>
@@ -47,6 +63,12 @@ const MainContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 5rem;
+`;
+
+const Button = styled.button`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const TableContainer = styled.div``;
