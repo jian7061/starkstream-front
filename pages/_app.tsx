@@ -9,6 +9,7 @@ import Layout from "../src/components/Layout";
 import "../styles/reset.css";
 import { ThemeProvider } from "styled-components";
 import { theme } from "../styles/theme";
+import "../styles/antdTheme.less";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const connectors = getInstalledInjectedConnectors();
