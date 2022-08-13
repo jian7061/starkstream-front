@@ -5,7 +5,7 @@ import Unwrap from "./Unwrap";
 import Link from "next/link";
 
 export default function WrapContainer() {
-  const [action, setAction] = useState("send");
+  const [action, setAction] = useState("wrap");
 
   const selectedStyle = {
     color: "red",
@@ -39,7 +39,7 @@ export default function WrapContainer() {
         <Link
           href={{
             pathname: "/wrap",
-            query: { name: "ungrade" },
+            query: { option: "upgrade" },
           }}
         >
           <Option
@@ -49,12 +49,19 @@ export default function WrapContainer() {
             <p>Wrap</p>
           </Option>
         </Link>
-        <Option
-          style={action === "unwrap" ? selectedStyle : unselectedStyle}
-          onClick={() => setAction("unwrap")}
+        <Link
+          href={{
+            pathname: "/wrap",
+            query: { option: "downgrade" },
+          }}
         >
-          <p>Unwrap</p>
-        </Option>
+          <Option
+            style={action === "unwrap" ? selectedStyle : unselectedStyle}
+            onClick={() => setAction("unwrap")}
+          >
+            <p>Unwrap</p>
+          </Option>
+        </Link>
       </Selector>
       <ModalMain>{renderLogic()}</ModalMain>
     </Wrapper>
@@ -64,7 +71,7 @@ export default function WrapContainer() {
 const Wrapper = styled.div`
   width: 500px;
   height: 450px;
-  background-color: #391E5A;
+  background-color: #391e5a;
   border-radius: 20px;
   box-shadow: rgb(204 204 204 / 55%) 0px 0px 6px 3px;
   border: 2px solid #80b8c2;
