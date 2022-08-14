@@ -26,6 +26,11 @@ const flowrateUnits: Record<string, number> = {
 }
 ////////
 
+const selectDropdownStyle = {
+  background: "#2d1857",
+  color: "#bfbfbf"
+}
+
 
 const StreamingCard: FC<{ mode: string, _streamType: string, txData: IDetailBreakdownSingle | IDetailBreakdownMulti | {} }> = ({ mode, _streamType, txData }) => {
 
@@ -65,7 +70,7 @@ const StreamingCard: FC<{ mode: string, _streamType: string, txData: IDetailBrea
         <WhiteTitle>{mode}</WhiteTitle>
 
 
-        <Segmented block disabled={disableEdit} options={["Direct", "Distribution"]} value={streamType} onChange={setStreamType} />
+        <StyledSegmented block disabled={disableEdit} options={["Direct", "Distribution"]} value={streamType} onChange={setStreamType} />
 
         <Form form={form} name="dynamic_form_item" size="large" style={{ width: "100%" }} onFinish={handleSubmit}
           onValuesChange={updateDetailData}
@@ -77,13 +82,14 @@ const StreamingCard: FC<{ mode: string, _streamType: string, txData: IDetailBrea
             <>
               {/* single receiver: direct */}
               <Form.Item name="receiver">
-                <Input
+                <StyledInput
+                  style={{ backgroundColor: "#2d1857"}}
                   disabled={disableEdit}
                   allowClear
                   placeholder="Receiving Address"
-                  prefix={
-                    <InboxOutlined />
-                  }
+                  // prefix={
+                  //   <InboxOutlined />
+                  // }
                 />
               </Form.Item>
             </>
@@ -110,7 +116,8 @@ const StreamingCard: FC<{ mode: string, _streamType: string, txData: IDetailBrea
                           required={false}
                           name={[name, 'addr']}
                         >
-                          <Input
+                          <StyledInput
+                          style={{ backgroundColor: "#2d1857"}}
                             disabled={disableEdit}
                             allowClear
                             placeholder="Receiving Address"
@@ -121,7 +128,7 @@ const StreamingCard: FC<{ mode: string, _streamType: string, txData: IDetailBrea
                         </Form.Item>
 
                         <Form.Item name={[name, 'perc']} style={{ width: "6.5rem" }}>
-                          <InputNumber max={100} min={0} addonAfter="%" />
+                          <StyledInputNumber max={100} min={0} addonAfter="%" />
                         </Form.Item>
 
                         {fields.length > 1 ? (
@@ -133,14 +140,14 @@ const StreamingCard: FC<{ mode: string, _streamType: string, txData: IDetailBrea
                       </Space>
                     ))}
                     <Form.Item>
-                      <Button
+                      <AddButton
                         type="dashed"
                         onClick={() => add()}
                         style={{ width: '60%' }}
                         icon={<PlusOutlined />}
                       >
                         Add receiver
-                      </Button>
+                      </AddButton>
                       <Form.ErrorList errors={errors} />
                     </Form.Item>
                   </>
@@ -152,7 +159,7 @@ const StreamingCard: FC<{ mode: string, _streamType: string, txData: IDetailBrea
           <Form.Item style={{ display: "inline-block" }}>
             {/* TokenSelector */}
             <Form.Item name="token">
-              <Select
+              <StyledSelect
                 disabled={disableEdit}
                 showSearch
                 style={{
@@ -160,11 +167,12 @@ const StreamingCard: FC<{ mode: string, _streamType: string, txData: IDetailBrea
                 }}
                 placeholder="Search Token"
                 optionFilterProp="children"
+                dropdownStyle={selectDropdownStyle}
               >
                 {tokenList.map((token, idx) =>
                   <Option key={idx} value={token}>{token}</Option>
                 )}
-              </Select>
+              </StyledSelect>
             </Form.Item>
 
             {/* Flowrate */}
@@ -173,11 +181,11 @@ const StreamingCard: FC<{ mode: string, _streamType: string, txData: IDetailBrea
                 <NumberInput placeholder="Flow Rate" type="number" />
               </Form.Item>
               <Form.Item name={['flowrate', 'unit']}>
-                <Select style={{ width: 120 }}>
+                <StyledSelect style={{ width: 120 }} dropdownStyle={selectDropdownStyle}>
                   {Object.keys(flowrateUnits).map(unit =>
                     <Option key={unit} value={unit}>/ {unit}</Option>
                   )}
-                </Select>
+                </StyledSelect>
               </Form.Item>
             </Input.Group>
           </Form.Item>
@@ -216,4 +224,80 @@ const WhiteTitle = styled.h4`
 
 const NumberInput = styled(Input)`
   width: 5rem;
+  background: #2d1857;
+  color: #bfbfbf;
+`;
+
+const StyledSegmented = styled(Segmented)`
+.ant-segmented-item-disabled > .ant-segmented-item-label {
+  color: black
+}
+
+.ant-segmented-item-selected, [class^="ant-segmented-thumb"] {
+  background: rgb(89, 81, 195);
+
+}
+.ant-segmented-item-label {
+    // padding: 0 1rem;
+    color: #fff;
+    // font-size: 1.3rem;
+    font-weight: 500;
+    // line-height: 0;
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: rgb(204 204 204 / 25%) 0px 0px 6px 3px;
+    }
+  }
+`
+
+const StyledInput = styled(Input)`
+  input {
+    background-color: #2d1857;
+    color: #bfbfbf;
+  }
+  .ant-input {
+    color: #bfbfbf;
+  }
+  .ant-input-affix-wrapper.ant-input-affix-wrapper-lg {
+    background: black;
+  }
+  .ant-input-affix-wrapper {
+    box-shadow: rgb(204 204 204 / 25%) 0px 0px 6px 3px!important;
+    border: none!important;
+  }
+`;
+
+const StyledInputNumber = styled(InputNumber)`
+    color: #bfbfbf;
+  .ant-input-number-lg {
+    background: #2d1857;
+  }
+  .ant-input-number-group-addon {
+    background-color: #7923e2;
+    color: white;
+  }
+`;
+
+const StyledSelect = styled(Select)`
+  span {
+    color: #bfbfbf;
+  }
+  .ant-select-selector, .ant-select-selection {
+    background: #2d1857!important;
+  }
+
+  .ant-select-item-option-content {
+    color: white!important;
+  }
+`;
+
+const AddButton = styled(Button)`
+  background: #7923e2;
+  color: white;
+  .ant-btn-dashed:hover, .ant-btn-dashed:focus {
+    opacity: 0.3;
+    background-color: #7923e2!important;
+  }
 `;
