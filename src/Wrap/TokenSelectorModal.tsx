@@ -12,9 +12,15 @@ const tokens = [
 ];
 
 export default function TokenSelectorModal({
+  action,
   isModalOpen,
   setIsModalOpen,
+  selectedToken,
+  setSelectedToken,
 }: {
+  selectedToken: any;
+  setSelectedToken: any;
+  action: any;
   isModalOpen: boolean;
   setIsModalOpen: any;
 }) {
@@ -31,7 +37,16 @@ export default function TokenSelectorModal({
       <Divider />
       <>
         {tokens.map((token, index) => {
-          return <TokenItem key={index} token={token} />;
+          return (
+            <TokenItem
+              setIsModalOpen={setIsModalOpen}
+              selectedToken={selectedToken}
+              setSelectedToken={setSelectedToken}
+              action={action}
+              key={index}
+              token={token}
+            />
+          );
         })}
       </>
     </Wrapper>
