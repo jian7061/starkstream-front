@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TokenSelectorModal from "./TokenSelectorModal";
 import Modal from "react-modal";
 Modal.setAppElement("#__next");
@@ -9,9 +9,10 @@ import { Action } from "./WrapContainer";
 
 export default function Wrap({ action }: { action: Action }) {
   const [amount, setAmount] = useState("0.0");
-  const [balance, setBalance] = useState("0");
+  const [balance, setBalance] = useState<any>();
   const [selectedToken, setSelectedToken] = useState("DAI");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const customStyles = {
     content: {
       top: "50%",
@@ -30,6 +31,12 @@ export default function Wrap({ action }: { action: Action }) {
     },
   };
 
+  useEffect(() => {
+    setBalance("0");
+  }, []);
+
+  const handleMax: any = () => {};
+
   return (
     <Wrapper>
       <MainContainer>
@@ -46,7 +53,7 @@ export default function Wrap({ action }: { action: Action }) {
             </TokenSelector>
             <BalanceContainer>
               <Balance>Balance: {balance}</Balance>
-              <MaxButton>MAX</MaxButton>
+              <MaxButton onClick={handleMax}>MAX</MaxButton>
             </BalanceContainer>
           </TokenContainer>
         </WrappingBox>
@@ -54,7 +61,11 @@ export default function Wrap({ action }: { action: Action }) {
         <WrappingBox>
           <Amount>{amount}</Amount>
           <TokenContainer>
-            <Token>{selectedToken}x</Token>
+            {action === "wrap" ? (
+              <p>{selectedToken}x</p>
+            ) : (
+              <p>{selectedToken}</p>
+            )}
             <Balance>Balance: {balance}</Balance>
           </TokenContainer>
         </WrappingBox>
@@ -77,6 +88,9 @@ export default function Wrap({ action }: { action: Action }) {
         style={customStyles}
       >
         <TokenSelectorModal
+          selectedToken={selectedToken}
+          setSelectedToken={setSelectedToken}
+          action={action}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
         />
