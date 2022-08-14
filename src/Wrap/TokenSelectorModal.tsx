@@ -12,17 +12,17 @@ const tokens = [
 ];
 
 export default function TokenSelectorModal({
-  action,
   isModalOpen,
   setIsModalOpen,
   selectedToken,
   setSelectedToken,
+  action,
 }: {
   selectedToken: any;
   setSelectedToken: any;
-  action: any;
   isModalOpen: boolean;
   setIsModalOpen: any;
+  action: any;
 }) {
   return (
     <Wrapper isModalOpen={isModalOpen}>

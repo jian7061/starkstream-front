@@ -6,7 +6,7 @@ import TokenSelectorModal from "./TokenSelectorModal";
 import Modal from "react-modal";
 Modal.setAppElement("#__next");
 
-export default function Wrap() {
+export default function Wrap({ action }: { action: any }) {
   const [amount, setAmount] = useState("0.0");
   const [balance, setBalance] = useState("0");
   const [selectedToken, setSelectedToken] = useState("DAI");
@@ -37,7 +37,7 @@ export default function Wrap() {
           <Amount>{amount}</Amount>
           <TokenContainer>
             <TokenSelector onClick={() => setIsModalOpen(true)}>
-              <p>token</p>
+              <p>{selectedToken}</p>
               <IoIosArrowDown />
             </TokenSelector>
             <BalanceContainer>
@@ -63,7 +63,13 @@ export default function Wrap() {
         onRequestClose={() => setIsModalOpen(false)}
         style={customStyles}
       >
-        <TokenSelectorModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <TokenSelectorModal
+          selectedToken={selectedToken}
+          setSelectedToken={setSelectedToken}
+          action={action}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
       </Modal>
     </Wrapper>
   );

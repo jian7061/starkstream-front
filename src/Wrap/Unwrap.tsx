@@ -6,7 +6,7 @@ import TokenSelectorModal from "./TokenSelectorModal";
 import Modal from "react-modal";
 Modal.setAppElement("#__next");
 
-export default function Unwrap() {
+export default function Unwrap({ action }: { action: any }) {
   const [amount, setAmount] = useState("0.0");
   const [balance, setBalance] = useState("0");
   const [selectedToken, setSelectedToken] = useState("DAI");
@@ -64,6 +64,9 @@ export default function Unwrap() {
         style={customStyles}
       >
         <TokenSelectorModal
+          selectedToken={selectedToken}
+          setSelectedToken={setSelectedToken}
+          action={action}
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
         />
