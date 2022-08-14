@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { useState } from "react";
 import Wrap from "./Wrap";
-import Unwrap from "./Unwrap";
 import Link from "next/link";
 
+export type Action = "wrap" | "unwrap";
+
 export default function WrapContainer() {
-  const [action, setAction] = useState("wrap");
+  const [action, setAction] = useState<Action>("wrap");
 
   const selectedStyle = {
     border: "none",
@@ -16,9 +17,9 @@ export default function WrapContainer() {
 
   const renderLogic = () => {
     if (action === "wrap") {
-      return <Wrap />;
+      return <Wrap action={action} />;
     } else if (action === "unwrap") {
-      return <Unwrap />;
+      return <Wrap action={action} />;
     }
   };
   return (

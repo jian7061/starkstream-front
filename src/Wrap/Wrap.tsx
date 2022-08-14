@@ -5,13 +5,13 @@ import { useState } from "react";
 import TokenSelectorModal from "./TokenSelectorModal";
 import Modal from "react-modal";
 Modal.setAppElement("#__next");
+import { Action } from "./WrapContainer";
 
-export default function Wrap() {
+export default function Wrap({ action }: { action: Action }) {
   const [amount, setAmount] = useState("0.0");
   const [balance, setBalance] = useState("0");
   const [selectedToken, setSelectedToken] = useState("DAI");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const customStyles = {
     content: {
       top: "50%",
@@ -37,7 +37,11 @@ export default function Wrap() {
           <Amount>{amount}</Amount>
           <TokenContainer>
             <TokenSelector onClick={() => setIsModalOpen(true)}>
-              <p>token</p>
+              {action === "wrap" ? (
+                <p>{selectedToken}</p>
+              ) : (
+                <p>{selectedToken}x</p>
+              )}
               <IoIosArrowDown />
             </TokenSelector>
             <BalanceContainer>
@@ -55,15 +59,27 @@ export default function Wrap() {
           </TokenContainer>
         </WrappingBox>
       </MainContainer>
-      <Unit>1 ETH = 1 ETHx</Unit>
-      <Button>Upgrade to Super Token</Button>
+      {action === "wrap" ? (
+        <>
+          <Unit>1 ETH = 1 ETHx</Unit>
+          <Button>Upgrade to Super Token</Button>
+        </>
+      ) : (
+        <>
+          <Unit>1 ETHx = 1 ETH</Unit>
+          <Button>Downgrade</Button>
+        </>
+      )}
 
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
         style={customStyles}
       >
-        <TokenSelectorModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <TokenSelectorModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
       </Modal>
     </Wrapper>
   );
