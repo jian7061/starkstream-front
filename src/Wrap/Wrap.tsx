@@ -1,14 +1,18 @@
 import styled from "styled-components";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { IoIosArrowDown } from "react-icons/io";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import TokenSelectorModal from "./TokenSelectorModal";
 import Modal from "react-modal";
 Modal.setAppElement("#__next");
+import { BigNumber, utils } from "ethers";
+import { FormInput } from "../components/common/FormInput";
 
 export default function Wrap({ action }: { action: any }) {
-  const [amount, setAmount] = useState("0.0");
+  const [amount, setAmount] = useState<any>();
+  const [parsedAmount, setParsedAmount] = useState<any>();
   const [balance, setBalance] = useState("0");
+  const [inputRef, setInputRef] = useState();
   const [selectedToken, setSelectedToken] = useState("DAI");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -29,12 +33,22 @@ export default function Wrap({ action }: { action: any }) {
       backgroundColor: "rgba(41, 46, 55, 0.75)",
     },
   };
+  const ref = useRef();
+  const onChangeAmount = (e: any) => {
+    if (e.target.value.toString() != "")
+      setParsedAmount(utils.parseEther(e.target.value.toString()));
+  };
 
   return (
     <Wrapper>
       <MainContainer>
         <WrappingBox>
-          <Amount>{amount}</Amount>
+          <AmountFormInput
+            ref={ref}
+            placeholder={selectedToken}
+            value={amount}
+            onChange={onChangeAmount}
+          />
           <TokenContainer>
             <TokenSelector onClick={() => setIsModalOpen(true)}>
               <p>{selectedToken}</p>
@@ -48,7 +62,10 @@ export default function Wrap({ action }: { action: any }) {
         </WrappingBox>
         <AiOutlineArrowDown className="icon" />
         <WrappingBox>
-          <Amount>{amount}</Amount>
+          <AmountFormInput
+            placeholder={selectedToken}
+            value={ref.current?.value}
+          />
           <TokenContainer>
             <Token>{selectedToken}x</Token>
             <Balance>Balance: {balance}</Balance>
@@ -105,9 +122,7 @@ const WrappingBox = styled.div`
   justify-content: space-between;
 `;
 
-const Amount = styled.div`
-  font-size: 1.8rem;
-`;
+const AmountFormInput = styled(FormInput)``;
 
 const TokenContainer = styled.div`
   display: flex;
