@@ -7,13 +7,16 @@ import {
 import Link from "next/link";
 import { capitalize } from "../utils/capitalize";
 import styled from "styled-components";
+import { IRealtimeBalanceProps, RealtimeBalance } from "./RealtimeBalance";
+import { useRouter } from "next/router";
+
 
 export type Assets = "A" | "B" | "C";
 
 export type TokenData = {
   asset: string;
-  balance: string;
-  netFlow: string;
+  balance: IRealtimeBalanceProps;
+  netFlow: number;
   inflow: string;
   image: any;
 };
@@ -31,17 +34,35 @@ const tableCols = [
   }),
   columnHelper.accessor("balance", {
     header: "BALANCE",
-    cell: (info) => <Link href={"/"}>Balance</Link>,
+    cell: (info) => {
+      const realtimeBalDetails = info.getValue();
+    return (
+    <Link href={"/"}>
+      <RealtimeBalance {...realtimeBalDetails} />
+    </Link>
+  )
+    }
   }),
   columnHelper.accessor("netFlow", {
     header: "NET FLOW",
-    cell: (info) => <Link href={"/"}>Net Flow</Link>,
+    cell: (info) => {
+      const netInflow = info.getValue();
+      const color = netInflow >= 0 ? "#00ff00" : "#ff9100";
+      const signedInflow = netInflow >= 0 ? "+"+netInflow : netInflow;
+    return <Link href={"/"}><span style={{ color }}>{signedInflow}</span></Link>
+    },
   }),
   columnHelper.accessor("netFlow", {
-    header: "NET FLOW",
-    cell: (info) => <Link href={"/"}>Inflow / Outflow</Link>,
+    header: "In / Out",
+    cell: (info) => {
+      const netInflow = info.getValue();
+      const color = netInflow >= 0 ? "#00ff00" : "#ff9100";
+      const signedInflow = netInflow >= 0 ? "+"+netInflow : netInflow;
+    return <Link href={"/"}><span style={{ color }}>{signedInflow}</span></Link>
+    },
   }),
 ];
+
 
 export default function TokenTable({ data }: { data: TokenData[] }) {
   const table = useReactTable<TokenData>({
@@ -49,6 +70,12 @@ export default function TokenTable({ data }: { data: TokenData[] }) {
     data,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const router = useRouter();
+  const handleClickActiveStream = (id: number) => {
+    router.push(`/stream?update&tx=${id}`);
+  }
+
   return (
     <Wrapper>
       <Title>Super Tokens</Title>
@@ -58,7 +85,7 @@ export default function TokenTable({ data }: { data: TokenData[] }) {
             {table.getHeaderGroups().map((headerGroup) => (
               <Row key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
+                  <th key={header.id} style={{ width: "10rem" }}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -72,7 +99,7 @@ export default function TokenTable({ data }: { data: TokenData[] }) {
           </thead>
           <tbody>
             {table.getRowModel().rows.map((row) => (
-              <Row key={row.id}>
+              <Row key={row.id} onClick={() => handleClickActiveStream(row.id)}>
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -108,6 +135,11 @@ const MainContainer = styled.div`
 
 const Row = styled.tr`
   border-bottom: 1px solid #edf2f7;
+  color: #c1c1c1;
+  &:hover {
+    background: #633bb95e;
+    cursor: pointer;
+  }
   th,
   td {
     padding-left: 1rem;

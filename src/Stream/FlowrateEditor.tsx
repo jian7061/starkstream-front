@@ -1,6 +1,7 @@
 import { FC, useContext, useState } from "react";
 import { Row, Select, Input, Col } from "antd";
 import { useEffect } from "react";
+import { SEC } from "../constants";
 
 const { Option } = Select;
 
@@ -9,7 +10,6 @@ interface IFlowrateUnit {
     scale: number
 };
 
-const SEC = 1;
 const flowrateUnits: Record<string, IFlowrateUnit> = {
     "s": {
         display: "/ second",

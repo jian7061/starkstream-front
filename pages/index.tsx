@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import Main from "../src/components/Main";
+import DashboardTable from "../src/Dashboard/DashboardTable";
 import styled from "styled-components";
 
 const Home: NextPage = () => {
   return (
     <Wrapper>
-      <Main />
+      <DashboardTable />
     </Wrapper>
   );
 };
