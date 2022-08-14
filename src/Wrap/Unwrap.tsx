@@ -5,12 +5,16 @@ import { useState } from "react";
 import TokenSelectorModal from "./TokenSelectorModal";
 import Modal from "react-modal";
 Modal.setAppElement("#__next");
+import { FormInput } from "../components/common/FormInput";
+import { BigNumber, utils } from "ethers";
 
 export default function Unwrap({ action }: { action: any }) {
-  const [amount, setAmount] = useState("0.0");
   const [balance, setBalance] = useState("0");
   const [selectedToken, setSelectedToken] = useState("DAI");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [value, setValue] = useState<any>();
+  const [parsedValue, setParsedValue] = useState<any>();
+  const [ref, setRef] = useState();
 
   const customStyles = {
     content: {
@@ -30,11 +34,22 @@ export default function Unwrap({ action }: { action: any }) {
     },
   };
 
+  const onChangeValue = (e: any) => {
+    if (e.target.value.toString() != "") {
+      setRef(e.target.value.toString());
+      setParsedValue(utils.parseEther(e.target.value.toString()));
+    }
+  };
+
   return (
     <Wrapper>
       <MainContainer>
         <WrappingBox>
-          <Amount>{amount}</Amount>
+          <AmountFormInput
+            placeholder="0.0"
+            value={value}
+            onChange={onChangeValue}
+          />
           <TokenContainer>
             <TokenSelector onClick={() => setIsModalOpen(true)}>
               <p>{selectedToken}x</p>
@@ -48,7 +63,7 @@ export default function Unwrap({ action }: { action: any }) {
         </WrappingBox>
         <AiOutlineArrowDown className="icon" />
         <WrappingBox>
-          <Amount>{amount}</Amount>
+          <AmountFormInput placeholder="0.0" value={ref} />
           <TokenContainer>
             <Token>{selectedToken}</Token>
             <Balance>Balance: {balance}</Balance>
@@ -108,6 +123,8 @@ const WrappingBox = styled.div`
 const Amount = styled.div`
   font-size: 1.8rem;
 `;
+
+const AmountFormInput = styled(FormInput)``;
 
 const TokenContainer = styled.div`
   display: flex;

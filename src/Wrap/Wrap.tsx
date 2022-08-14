@@ -9,13 +9,12 @@ import { BigNumber, utils } from "ethers";
 import { FormInput } from "../components/common/FormInput";
 
 export default function Wrap({ action }: { action: any }) {
-  const [amount, setAmount] = useState<any>();
-  const [parsedAmount, setParsedAmount] = useState<any>();
+  const [ref, setRef] = useState();
   const [balance, setBalance] = useState("0");
-  const [inputRef, setInputRef] = useState();
   const [selectedToken, setSelectedToken] = useState("DAI");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [value, setValue] = useState<any>();
+  const [parsedValue, setParsedValue] = useState<any>();
   const customStyles = {
     content: {
       top: "50%",
@@ -33,21 +32,23 @@ export default function Wrap({ action }: { action: any }) {
       backgroundColor: "rgba(41, 46, 55, 0.75)",
     },
   };
-  const ref = useRef();
-  const onChangeAmount = (e: any) => {
-    if (e.target.value.toString() != "")
-      setParsedAmount(utils.parseEther(e.target.value.toString()));
+
+  const onChangeValue = (e: any) => {
+    if (e.target.value.toString() != "") {
+      setRef(e.target.value.toString());
+      setParsedValue(utils.parseEther(e.target.value.toString()));
+    }
   };
 
+  console.log(parsedValue);
   return (
     <Wrapper>
       <MainContainer>
         <WrappingBox>
           <AmountFormInput
-            ref={ref}
-            placeholder={selectedToken}
-            value={amount}
-            onChange={onChangeAmount}
+            placeholder="0.0"
+            value={value}
+            onChange={onChangeValue}
           />
           <TokenContainer>
             <TokenSelector onClick={() => setIsModalOpen(true)}>
@@ -62,10 +63,7 @@ export default function Wrap({ action }: { action: any }) {
         </WrappingBox>
         <AiOutlineArrowDown className="icon" />
         <WrappingBox>
-          <AmountFormInput
-            placeholder={selectedToken}
-            value={ref.current?.value}
-          />
+          <AmountFormInput placeholder="0.0" value={ref} />
           <TokenContainer>
             <Token>{selectedToken}x</Token>
             <Balance>Balance: {balance}</Balance>
@@ -74,7 +72,6 @@ export default function Wrap({ action }: { action: any }) {
       </MainContainer>
       <Unit>1 ETH = 1 ETHx</Unit>
       <Button>Upgrade to Super Token</Button>
-
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
