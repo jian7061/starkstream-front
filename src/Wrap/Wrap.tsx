@@ -63,7 +63,7 @@ export default function Wrap() {
         onRequestClose={() => setIsModalOpen(false)}
         style={customStyles}
       >
-        <TokenSelectorModal setIsModalOpen={setIsModalOpen} />
+        <TokenSelectorModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
       </Modal>
     </Wrapper>
   );

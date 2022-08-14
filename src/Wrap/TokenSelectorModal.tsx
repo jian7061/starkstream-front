@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import eth from "../../public/eth.png";
 import dai from "../../public/dai.png";
 import usdc from "../../public/usdc.png";
@@ -12,12 +12,14 @@ const tokens = [
 ];
 
 export default function TokenSelectorModal({
+  isModalOpen,
   setIsModalOpen,
 }: {
+  isModalOpen: boolean;
   setIsModalOpen: any;
 }) {
   return (
-    <Wrapper>
+    <Wrapper isModalOpen={isModalOpen}>
       <TitleContainer>
         <Title>Select a token</Title>
         <IoMdClose
@@ -36,8 +38,17 @@ export default function TokenSelectorModal({
   );
 }
 
+const openModal = css<{ isModalOpen: boolean }>`
+  ${(props) =>
+    props.isModalOpen &&
+    css`
+      overflow: hidden;
+    `}
+`;
+
 const Wrapper = styled.div`
   width: 500px;
+  ${openModal}
 `;
 
 const TitleContainer = styled.div`
