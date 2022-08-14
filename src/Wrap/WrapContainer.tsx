@@ -2,11 +2,13 @@ import styled from "styled-components";
 import { useState } from "react";
 import Wrap from "./Wrap";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export type Action = "wrap" | "unwrap";
 
 export default function WrapContainer() {
   const [action, setAction] = useState<Action>("wrap");
+  const router = useRouter();
 
   const selectedStyle = {
     border: "none",

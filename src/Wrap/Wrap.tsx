@@ -6,9 +6,14 @@ import TokenSelectorModal from "./TokenSelectorModal";
 import Modal from "react-modal";
 Modal.setAppElement("#__next");
 import { Action } from "./WrapContainer";
+import { FormInput } from "../components/common/FormInput";
+import { BigNumber, utils } from "ethers";
 
 export default function Wrap({ action }: { action: Action }) {
-  const [amount, setAmount] = useState("0.0");
+  const [wrapValue, setWrapValue] = useState<any>();
+  const [unwrapValue, setUnwrapValue] = useState<any>();
+  const [parsedWrapValue, setParsedWrapValue] = useState<any>();
+  const [parsedUnwrapValue, setParsedUnwrapValue] = useState<any>();
   const [balance, setBalance] = useState<any>();
   const [selectedToken, setSelectedToken] = useState("DAI");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,70 +36,121 @@ export default function Wrap({ action }: { action: Action }) {
     },
   };
 
-  useEffect(() => {
-    setBalance("0");
-  }, []);
-
   const handleMax: any = () => {};
+
+  const onChangeWrapValue = (e: any) => {
+    if (e.target.value.toString().length > 0) {
+      setParsedWrapValue(utils.parseEther(e.target.value.toString()));
+    }
+    console.log(action, e.target.value.toString());
+  };
+
+  const onChangeUnwrapValue = (e: any) => {
+    if (e.target.value.toString().length > 0) {
+      setParsedUnwrapValue(utils.parseEther(e.target.value.toString()));
+    }
+    console.log(action, e.target.value.toString());
+  };
 
   return (
     <Wrapper>
-      <MainContainer>
-        <WrappingBox>
-          <Amount>{amount}</Amount>
-          <TokenContainer>
-            <TokenSelector onClick={() => setIsModalOpen(true)}>
-              {action === "wrap" ? (
-                <p>{selectedToken}</p>
-              ) : (
-                <p>{selectedToken}x</p>
-              )}
-              <IoIosArrowDown />
-            </TokenSelector>
-            <BalanceContainer>
-              <Balance>Balance: {balance}</Balance>
-              <MaxButton onClick={handleMax}>MAX</MaxButton>
-            </BalanceContainer>
-          </TokenContainer>
-        </WrappingBox>
-        <AiOutlineArrowDown className="icon" />
-        <WrappingBox>
-          <Amount>{amount}</Amount>
-          <TokenContainer>
-            {action === "wrap" ? (
-              <p>{selectedToken}x</p>
-            ) : (
-              <p>{selectedToken}</p>
-            )}
-            <Balance>Balance: {balance}</Balance>
-          </TokenContainer>
-        </WrappingBox>
-      </MainContainer>
       {action === "wrap" ? (
         <>
+          <MainContainer>
+            <WrappingBox>
+              <AmountFormInput
+                placeholder={selectedToken}
+                value={wrapValue}
+                onChange={onChangeWrapValue}
+              />
+              <TokenContainer>
+                <TokenSelector onClick={() => setIsModalOpen(true)}>
+                  <p>{selectedToken}</p>
+                  <IoIosArrowDown />
+                </TokenSelector>
+                <BalanceContainer>
+                  <Balance>Balance: {balance}</Balance>
+                  <MaxButton onClick={handleMax}>MAX</MaxButton>
+                </BalanceContainer>
+              </TokenContainer>
+            </WrappingBox>
+            <AiOutlineArrowDown className="icon" />
+            <WrappingBox>
+              <AmountFormInput
+                placeholder={selectedToken}
+                value={action === "wrap" ? parsedWrapValue : parsedUnwrapValue}
+              />
+              <TokenContainer>
+                <p>{selectedToken}x</p>
+                <Balance>Balance: {balance}</Balance>
+              </TokenContainer>
+            </WrappingBox>
+          </MainContainer>
           <Unit>1 ETH = 1 ETHx</Unit>
           <Button>Upgrade to Super Token</Button>
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            style={customStyles}
+          >
+            <TokenSelectorModal
+              selectedToken={selectedToken}
+              setSelectedToken={setSelectedToken}
+              action={action}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+            />
+          </Modal>
         </>
       ) : (
         <>
+          <MainContainer>
+            <WrappingBox>
+              <AmountFormInput
+                placeholder={selectedToken}
+                value={unwrapValue}
+                onChange={onChangeUnwrapValue}
+              />
+              <TokenContainer>
+                <TokenSelector onClick={() => setIsModalOpen(true)}>
+                  <p>{selectedToken}x</p>
+                  <IoIosArrowDown />
+                </TokenSelector>
+                <BalanceContainer>
+                  <Balance>Balance: {balance}</Balance>
+                  <MaxButton onClick={handleMax}>MAX</MaxButton>
+                </BalanceContainer>
+              </TokenContainer>
+            </WrappingBox>
+            <AiOutlineArrowDown className="icon" />
+            <WrappingBox>
+              <AmountFormInput
+                placeholder={selectedToken}
+                value={parsedUnwrapValue}
+              />
+              <TokenContainer>
+                <p>{selectedToken}</p>
+                <Balance>Balance: {balance}</Balance>
+              </TokenContainer>
+            </WrappingBox>
+          </MainContainer>
           <Unit>1 ETHx = 1 ETH</Unit>
           <Button>Downgrade</Button>
+          <Modal
+            isOpen={isModalOpen}
+            onRequestClose={() => setIsModalOpen(false)}
+            style={customStyles}
+          >
+            <TokenSelectorModal
+              selectedToken={selectedToken}
+              setSelectedToken={setSelectedToken}
+              action={action}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+            />
+          </Modal>
         </>
       )}
-
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-        style={customStyles}
-      >
-        <TokenSelectorModal
-          selectedToken={selectedToken}
-          setSelectedToken={setSelectedToken}
-          action={action}
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-        />
-      </Modal>
     </Wrapper>
   );
 }
@@ -129,8 +185,8 @@ const WrappingBox = styled.div`
   justify-content: space-between;
 `;
 
-const Amount = styled.div`
-  font-size: 1.8rem;
+const AmountFormInput = styled(FormInput)`
+  margin-bottom: 0.5rem;
 `;
 
 const TokenContainer = styled.div`
