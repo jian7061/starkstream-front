@@ -1,4 +1,4 @@
-import { useConnectors } from "@starknet-react/core";
+import { Connector, useConnectors } from "@starknet-react/core";
 import styled from "styled-components";
 import Account from "../components/common/Account";
 
@@ -6,7 +6,7 @@ type ConnectProps = { account: string | undefined };
 
 export default function Connect({ account }: ConnectProps) {
   const { available, connect, disconnect } = useConnectors();
-
+  
   return (
     <Wrapper>
       {account ? (
